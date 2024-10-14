@@ -34,6 +34,8 @@ def exibir():
     return str([f'nome: {user.nome}, email: {user.email}, senha:{user.senha}' for user in usuarios])
 
 
+
+#cadastrando.
 @app.route('/cadastra', methods= ['GET', 'POST'])
 def cadastrar():
     if request.method == "POST":
@@ -46,6 +48,7 @@ def cadastrar():
         return redirect(url_for('index'))
     return render_template('cadastro.html')
 
+#criando login.
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -69,6 +72,8 @@ def login():
             return 'usuario não encontrado'
     
     return render_template('login.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
