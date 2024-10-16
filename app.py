@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+app.secret_key= 'chave_super_secreta'
 
 # Configurando o banco de dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meubanco.db'
@@ -64,7 +66,8 @@ def login():
 
         if usuario:
             if usuario.senha == senha:
-                return f'bem vindo, {usuario.nome}'
+                session['nome_usuario']= usuario.nome
+                return redirect(url_for('autoriza'))
             else:
                 return 'senha inválida'
             
@@ -74,6 +77,15 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/autoriza')
+def autoriza(): 
+    nome_usuario= session.get('nome_usuario')
+
+    if nome_usuario:
+        return render_template('autoriza.html', nome= nome_usuario)
+    
+    else:
+        return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
