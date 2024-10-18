@@ -17,6 +17,7 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(100), nullable=False)
+    tipo_usuario = db.Column(db.String(50), nullable= False)
 
     def __repr__(self):
         return f'<Usuario {self.nome}>'
@@ -25,26 +26,28 @@ class Usuario(db.Model):
 with app.app_context():
     db.create_all()
 
-# Criando rotas
+#rotas
 @app.route('/')
 def index():
-    return "Conectado"
+    return redirect(url_for('login'))
     
 @app.route('/exibe')
 def exibir():
     usuarios = Usuario.query.all()
-    return str([f'nome: {user.nome}, email: {user.email}, senha:{user.senha}' for user in usuarios])
+    return str([f'nome: {user.nome}, email: {user.email}, tipo_usuario{user.tipo_usuario}' for user in usuarios])
 
 
 
-#cadastrando.
+#cadastro
 @app.route('/cadastra', methods= ['GET', 'POST'])
 def cadastrar():
     if request.method == "POST":
         nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
-        novo_usr = Usuario(nome=nome, email=email, senha=senha)
+        tipo_usuario= request.form['tipo_usuario']
+
+        novo_usr = Usuario(nome=nome, email=email, senha=senha, tipo_usuario= tipo_usuario)
         db.session.add(novo_usr)
         db.session.commit()
         return redirect(url_for('index'))
@@ -60,14 +63,21 @@ def login():
         
         if not email or not senha:
             return 'campos não preenchidos'
-
-        #verificação de usuario
         usuario= Usuario.query.filter_by(email=email).first()
 
         if usuario:
             if usuario.senha == senha:
                 session['nome_usuario']= usuario.nome
-                return redirect(url_for('autoriza'))
+                session['tipo_usuario']= usuario.tipo_usuario
+                
+                if usuario.tipo_usuario == 'Credenciado':
+                    return redirect(url_for('autoriza'))
+                
+                elif usuario.tipo_usuario == 'Operadora':
+                    return redirect(url_for('autoriza_loc'))
+                else:
+                    return 'Tipo de Usuario não reconhecido'
+                
             else:
                 return 'senha inválida'
             
@@ -80,12 +90,25 @@ def login():
 @app.route('/autoriza')
 def autoriza(): 
     nome_usuario= session.get('nome_usuario')
+    tipo_usuario= session.get('tipo_usuario')
 
     if nome_usuario:
-        return render_template('autoriza.html', nome= nome_usuario)
+        return render_template('autoriza.html', nome= nome_usuario, tipo= tipo_usuario)
     
     else:
         return redirect(url_for('login'))
+
+@app.route('/autoriza_loc')
+def autoriza_loc():
+    nome_usuario= session.get('nome_usuario')
+    tipo_usuario= session.get('tipo_usuario')
+
+    if nome_usuario:
+        return render_template('autoriza_loc.html', nome= nome_usuario, tipo= tipo_usuario)
+    
+    else:
+        return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
