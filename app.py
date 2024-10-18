@@ -22,6 +22,7 @@ class Usuario(db.Model):
     def __repr__(self):
         return f'<Usuario {self.nome}>'
 
+
 # Criando o banco de dados e as tabelas
 with app.app_context():
     db.create_all()
