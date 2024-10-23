@@ -165,6 +165,12 @@ def autoriza_loc():
     else:
         return redirect(url_for('login'))
  
+@app.route('/cria_aut')
+def cria_aut():
+    nome_usuario= session.get('nome_usuario')
+
+    return render_template('cria_aut.html', nome= nome_usuario)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
