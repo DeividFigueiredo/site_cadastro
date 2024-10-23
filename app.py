@@ -40,6 +40,9 @@ class Autorizacao(db.Model):
     matricula_beneficiario = db.Column(db.String(100), db.ForeignKey('beneficiario.matricula'), nullable=False)  # Qual beneficiário recebeu a autorização (chave estrangeira)
     data_autorizacao = db.Column(db.DateTime, nullable=False)  # Data da autorização
     status = db.Column(db.String(50), nullable=False)  # Status da autorização (por exemplo, aprovada ou negada)
+    senha= db.Column(db.String(20), nullable=True)
+    cod_procedimento= db.Column(db.String(20), nullable=False)
+    nome_procedimento= db.Column(db.String(50), nullable=False)
 
     beneficiario = db.relationship('Beneficiario', backref='autorizacoes')  # Relacionamento com o beneficiário
 
