@@ -165,11 +165,22 @@ def autoriza_loc():
     else:
         return redirect(url_for('login'))
  
-@app.route('/cria_aut')
+@app.route('/cria_aut', methods= ['POST', 'GET'])
 def cria_aut():
     nome_usuario= session.get('nome_usuario')
+    if request.method == 'POST':
+        senha= request.form.get('senha')
+        matricula= request.form.get('matricula_beneficiario')
+        autorizaca= request.form.get('data_autorizacao')
+        status= request.form.get('status')
+        matricula= request.form.get('nome_procedimento')
+
+        nova_autorizaco= Autorizacao(MATRI)
+
+
 
     return render_template('cria_aut.html', nome= nome_usuario)
+
 
 
 if __name__ == '__main__':
