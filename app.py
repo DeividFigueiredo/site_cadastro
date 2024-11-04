@@ -37,13 +37,15 @@ class Beneficiario(db.Model):
 class Autorizacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Um número que identifica cada autorização
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)  # Qual usuário fez a autorização (chave estrangeira)
-    matricula_beneficiario = db.Column(db.String(100), db.ForeignKey('beneficiario.matricula'), nullable=False)  # Qual beneficiário recebeu a autorização (chave estrangeira)
+    matricula = db.Column(db.String(100), db.ForeignKey('beneficiario.matricula'), nullable=False)  # Qual beneficiário recebeu a autorização (chave estrangeira)
     data_autorizacao = db.Column(db.DateTime, nullable=False)  # Data da autorização
     status = db.Column(db.String(50), nullable=False)  # Status da autorização (por exemplo, aprovada ou negada)
     senha= db.Column(db.String(20), nullable=True)
     cod_procedimento= db.Column(db.String(20), nullable=False)
     nome_procedimento= db.Column(db.String(50), nullable=False)
-
+    nome_local= db.Column(db.String(50), nullable= False)
+    nome_atendente= db.Column(db.String(50), nullable= False)
+    
     beneficiario = db.relationship('Beneficiario', backref='autorizacoes')  # Relacionamento com o beneficiário
 
     def __repr__(self):
@@ -129,8 +131,11 @@ def login():
                 if usuario.tipo_usuario == 'Credenciado':
                     return redirect(url_for('autoriza'))
                 
-                elif usuario.tipo_usuario == 'Operadora':
+                elif usuario.tipo_usuario == 'Autorizador':
                     return redirect(url_for('autoriza_loc'))
+                
+                elif usuario.tipo_usuario == 'Amacor':
+                    return redirect(url_for('autoriza'))
                 else:
                     return 'Tipo de Usuario não reconhecido'
                 
@@ -171,12 +176,17 @@ def cria_aut():
     if request.method == 'POST':
         senha= request.form.get('senha')
         matricula= request.form.get('matricula_beneficiario')
-        autorizaca= request.form.get('data_autorizacao')
+        data_autorizacao_str= request.form.get('data_autorizacao')
         status= request.form.get('status')
         matricula= request.form.get('nome_procedimento')
+       
+        data_autorizacao= datetime.strptime(data_autorizacao_str,'%Y-%m-%d').date()
 
-        nova_autorizaco= Autorizacao(MATRI)
 
+        nova_autorizaco= Autorizacao(matricula=matricula,senha=senha,data_autorizacao=data_autorizacao,status=status)
+        db.session.add(nova_autorizaco)
+        db.session.commit()
+        
 
 
     return render_template('cria_aut.html', nome= nome_usuario)

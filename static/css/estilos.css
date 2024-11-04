@@ -1,0 +1,91 @@
+.botao {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Azul padrão, você pode alterar */
+    border-radius: 5px;
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s ease;
+}
+
+.botao:hover {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+
+/* Centralizar o conteúdo da página */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(#fa9b2f, #1c7ecf);
+}
+
+/* Estilo da caixa de login */
+.divisoria {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+/* Estilo do título */
+.divisoria h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo dos rótulos e campos de entrada */
+label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Estilo do botão de envio */
+.envia {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.envia:hover {
+    background-color: #0056b3;
+}
+
+
+.corpo_padrao{
+    background-color:rgba(46, 46, 46, 0.719);
+    
+    justify-content: center;
+    align-items: center ;
+    margin: 20;
+    font-family: Arial, sans-serif; 
+}

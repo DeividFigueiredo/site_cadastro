@@ -1,15 +1,25 @@
-<form method="POST">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required><br>
+<<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
 
-    <label for="matricula">Matrícula:</label>
-    <input type="text" id="matricula" name="matricula" required><br>
 
-    <label for="data_entrada">Data de Entrada:</label>
-    <input type="date" id="data_entrada" name="data_entrada" required><br>
 
-    <label for="status">Status:</label>
-    <input type="text" id="status" name="status" required><br>
+<body class="corpo_padrao">
+    
 
-    <button type="submit">Cadastrar Beneficiário</button>
-</form>
+    <form method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" required><br>
+
+        <label for="data_entrada">Data de Entrada:</label>
+        <input type="date" id="data_entrada" name="data_entrada" required><br>
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" required><br>
+
+        <button type="submit">Cadastrar Beneficiário</button>
+    </form>
+</body>

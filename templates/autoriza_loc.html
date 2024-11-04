@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Bem-vindo</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Sua Página</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    </head>
+<body class="corpo_padrao">
     <h1>Bem-vindo, {{ nome }}!</h1>
     <h2>Local de utilização: {{tipo}}</h2>
 
-    <DIV>
-        <a href="{{ url_for('cria_aut') }}">Nova Autorização</a>
+    
+        <a href="{{ url_for('cria_aut') }}" class= 'botao'>Incluir Autorização</a>
 
-        <a href=" ">Validar Autorizações</a>
-
-    </DIV>
+        <a href=" " class="botao">Validar Autorizações</a>
+        <a href="{{ url_for('cadastrar_benef')}}" class="botao">Incluir beneficiario</a>
 </body>
 </html>

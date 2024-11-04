@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Autorização</title>
-
-    <h2>bem vindo {{nome}}</h2>
+    <title>Incluir Autorização</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">  
 </head>
 <body>
-    
+    <h1>Incluir Nova Autorização</h1>
+    <form action="{{ url_for('cria_aut') }}" method="POST">
+        <label for="matricula">Matrícula do Beneficiário:</label>
+        <input type="text" id="matricula" name="matricula" required>
+
+        <label for="senha">Senha:</label>
+        <input type="text" id="senha" name="senha" required>
+
+        <label for="data">Data da Autorização:</label>
+        <input type="date" id="data" name="data" required>
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" required>
+
+        <label for="nome_procedimento">Nome do Procedimento:</label>
+        <input type="text" id="nome_procedimento" name="nome_procedimento" required>
+        <br><br>
+        <button type="submit" class="botao">Enviar</button>
+    </form>
 </body>
 </html>

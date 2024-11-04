@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+<body class="login-body">
+        <div class="divisoria">
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
 
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required><br><br>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required><br>
 
-        <input type="submit" value="Login">
-    </form>
+                <input type="submit" class="envia" value="Login">
+            </form>
+        </div>
 </body>
 </html>
