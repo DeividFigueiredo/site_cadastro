@@ -18,7 +18,10 @@
         <input type="date" id="data_autorizacao" name="data_autorizacao" required>
 
         <label for="status">Status:</label>
-        <input type="text" id="status" name="status" required>
+        <select name="status" id="status">
+            <option value="AUTORIZADO">Autorizado</option>
+            <option value="NEGADO">Negado</option>
+        </select>
 
         <label for="nome_procedimento">Nome do Procedimento:</label>
         <input type="text" id="nome_procedimento" name="nome_procedimento" required>
