@@ -73,7 +73,16 @@ def exibe():
     beneficiarios= Beneficiario.query.all()
     return str([f'nome: {user.nome}, matricula{user.matricula}, data_entrada:{user.data_entrada}, status:{user.status}'for user in beneficiarios])
 
-
+@app.route('/aut_show')
+def show():
+    autorizacoes= Autorizacao.query.all()
+    return str([
+        f'Matrícula: {autorizacao.matricula}, Data da Autorização: {autorizacao.data_autorizacao}, '
+        f'Status: {autorizacao.status}, Senha: {autorizacao.senha}, Código do Procedimento: {autorizacao.cod_procedimento}, '
+        f'Nome do Procedimento: {autorizacao.nome_procedimento}, Local: {autorizacao.nome_local}, '
+        f'Atendente: {autorizacao.nome_atendente}' 
+        for autorizacao in autorizacoes
+    ])
 
 #rotas de cadastro
 @app.route('/cadastra', methods= ['GET', 'POST'])
@@ -184,7 +193,7 @@ def cria_aut():
 
     if request.method == 'POST':
         senha = request.form.get('senha')
-        matricula = request.form.get('matricula_beneficiario')
+        matricula = request.form.get('matricula')
         data_autorizacao_str = request.form.get('data_autorizacao')
         status = request.form.get('status')
         cod_procedimento = request.form.get('cod_procedimento')
