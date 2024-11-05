@@ -5,23 +5,33 @@
     <title>Incluir Autorização</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">  
 </head>
-<body>
-    <h1>Incluir Nova Autorização</h1>
+<h1>Incluir Nova Autorização</h1>
     <form action="{{ url_for('cria_aut') }}" method="POST">
+        
         <label for="matricula">Matrícula do Beneficiário:</label>
         <input type="text" id="matricula" name="matricula" required>
 
         <label for="senha">Senha:</label>
         <input type="text" id="senha" name="senha" required>
 
-        <label for="data">Data da Autorização:</label>
-        <input type="date" id="data" name="data" required>
+        <label for="data_autorizacao">Data da Autorização:</label>
+        <input type="date" id="data_autorizacao" name="data_autorizacao" required>
 
         <label for="status">Status:</label>
         <input type="text" id="status" name="status" required>
 
         <label for="nome_procedimento">Nome do Procedimento:</label>
         <input type="text" id="nome_procedimento" name="nome_procedimento" required>
+
+        <label for="cod_procedimento">Código do Procedimento:</label>
+        <input type="text" id="cod_procedimento" name="cod_procedimento" required>
+
+        <label for="nome_local">Nome do Local:</label>
+        <input type="text" id="nome_local" name="nome_local" required>
+
+        <label for="nome_atendente">Nome do Atendente:</label>
+        <input type="text" id="nome_atendente" name="nome_atendente" required>
+
         <br><br>
         <button type="submit" class="botao">Enviar</button>
     </form>

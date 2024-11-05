@@ -87,7 +87,7 @@ def cadastrar():
         novo_usr = Usuario(nome=nome, email=email, senha=senha, tipo_usuario= tipo_usuario)
         db.session.add(novo_usr)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     return render_template('cadastro.html')
 
 @app.route('/cadastro_beneficiario', methods= ['GET','POST'])
@@ -125,6 +125,7 @@ def login():
 
         if usuario:
             if usuario.senha == senha:
+                session['usuario_id'] = usuario.id
                 session['nome_usuario']= usuario.nome
                 session['tipo_usuario']= usuario.tipo_usuario
                 
@@ -148,7 +149,7 @@ def login():
     return render_template('login.html')
 
 
-#autorizadores
+#paginas de inicio
 @app.route('/autoriza')
 def autoriza(): 
     nome_usuario= session.get('nome_usuario')
@@ -169,22 +170,51 @@ def autoriza_loc():
         return render_template('autoriza_loc.html', nome= nome_usuario, tipo= tipo_usuario)
     else:
         return redirect(url_for('login'))
- 
+
+
+#criando autorização.
 @app.route('/cria_aut', methods= ['POST', 'GET'])
 def cria_aut():
+
+    usuario_id= session.get('usuario_id')
     nome_usuario= session.get('nome_usuario')
+    
+    if usuario_id == None:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
-        senha= request.form.get('senha')
-        matricula= request.form.get('matricula_beneficiario')
-        data_autorizacao_str= request.form.get('data_autorizacao')
-        status= request.form.get('status')
-        matricula= request.form.get('nome_procedimento')
-       
-        data_autorizacao= datetime.strptime(data_autorizacao_str,'%Y-%m-%d').date()
+        senha = request.form.get('senha')
+        matricula = request.form.get('matricula_beneficiario')
+        data_autorizacao_str = request.form.get('data_autorizacao')
+        status = request.form.get('status')
+        cod_procedimento = request.form.get('cod_procedimento')
+        nome_procedimento = request.form.get('nome_procedimento')
+        nome_local = request.form.get('nome_local')
+        nome_atendente = request.form.get('nome_atendente')
 
 
-        nova_autorizaco= Autorizacao(matricula=matricula,senha=senha,data_autorizacao=data_autorizacao,status=status)
-        db.session.add(nova_autorizaco)
+        #converter a data para str
+        data_autorizacao= None
+
+        if data_autorizacao_str:
+            try:
+                data_autorizacao = datetime.strptime(data_autorizacao_str, '%Y-%m-%d').date()
+            except ValueError:
+                return "Erro: Formato de data invalido."        
+
+
+        nova_autorizacao = Autorizacao(
+            usuario_id=usuario_id,
+            matricula=matricula,
+            senha=senha,
+            data_autorizacao=data_autorizacao,
+            status=status,
+            cod_procedimento=cod_procedimento,
+            nome_procedimento=nome_procedimento,
+            nome_local=nome_local,
+            nome_atendente=nome_atendente
+        )
+        db.session.add(nova_autorizacao)
         db.session.commit()
         
 
