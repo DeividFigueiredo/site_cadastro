@@ -230,7 +230,12 @@ def cria_aut():
 
     return render_template('cria_aut.html', nome= nome_usuario)
 
+@app.route('/valida_aut')
+def valida_aut():
+    autorizacoes= Autorizacao.query.all()
 
+    return render_template('valida_aut.html', autorizacoes=autorizacoes)
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

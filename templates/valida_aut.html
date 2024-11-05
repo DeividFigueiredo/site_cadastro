@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Autorizações</title>
+</head>
+<body>
+    <h1>Validar Autorizações</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Matrícula</th>
+                <th>Data da Autorização</th>
+                <th>Status</th>
+                <th>Ações</th>  <!-- Nova coluna para ações -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for autorizacao in autorizacoes %}
+                <tr>
+                    <td>{{ autorizacao.id }}</td>
+                    <td>{{ autorizacao.matricula }}</td>
+                    <td>{{ autorizacao.data_autorizacao.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ autorizacao.status }}</td>
+                    <td>
+                        <a href=" ">Ver Detalhes</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
