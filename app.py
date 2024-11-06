@@ -57,9 +57,14 @@ with app.app_context():
     db.create_all()
 
 
-    ###rotas
+    ###rotas de configuração
 @app.route('/')
 def index():
+    return redirect(url_for('login'))
+
+@app.route('/logout')
+def logoff():
+    session.pop('nome_usuario', None)
     return redirect(url_for('login'))
 
 #rotas de exibição    

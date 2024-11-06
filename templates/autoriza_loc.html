@@ -2,17 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Sua Página</title>
+        <title>Portal Amatiss</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
     </head>
 <body class="corpo_padrao">
-    <h1>Bem-vindo, {{ nome }}!</h1>
-    <h2>Local de utilização: {{tipo}}</h2>
-
-    
+    <div class="cabecalho">
+        <h1>Amatiss</h1>
+        
+    </div>
+    <nav class="navbar">
         <a href="{{ url_for('cria_aut') }}" class= 'botao'>Incluir Autorização</a>
 
         <a href=" {{ url_for('valida_aut') }} " class="botao">Validar Autorizações</a>
         <a href="{{ url_for('cadastrar_benef')}}" class="botao">Incluir beneficiario</a>
+        <a href="{{ url_for('logoff') }}" class="logoff">Sair</a>
+        
+    
+    </nav>
+    
 </body>
 </html>

@@ -1,7 +1,7 @@
 .botao {
     display: inline-block;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: white;
     background-color: #007BFF; /* Azul padrão, você pode alterar */
@@ -14,6 +14,17 @@
     background-color: #0056b3; /* Cor mais escura ao passar o mouse */
 }
 
+h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+
+h2 {
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
 
 /* Centralizar o conteúdo da página */
 .login-body {
@@ -82,10 +93,104 @@ input[type="password"] {
 
 
 .corpo_padrao{
-    background-color:rgba(46, 46, 46, 0.719);
-    
-    justify-content: center;
-    align-items: center ;
-    margin: 20;
-    font-family: Arial, sans-serif; 
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    height: 100vh;
+
 }
+
+.navbar {
+    display: flex;
+    justify-content: center; /* Centraliza os botões principais */
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #007bff;
+    padding: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.navbar .botao {
+    color: white;
+    padding: 5px 15px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.navbar .logoff {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Azul padrão, você pode alterar */
+    border-radius: 5px;
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s ease;
+}
+
+.navbar .botao:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Estilo geral do cabeçalho */
+.cabecalho {
+    background-color: #f0f8ff; /* Azul claro */
+    color: #333; /* Cor do texto */
+    text-align: center; /* Centraliza o conteúdo */
+    padding: 20px; /* Espaçamento interno */
+    border-bottom: 2px solid #005f73; /* Borda inferior */
+    /*box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    font-family: Arial, sans-serif; /* Fonte moderna */
+    margin-top: 0;
+}
+
+/* Estilo do título principal */
+.cabecalho h1 {
+    color: #005f73; /* Azul escuro */
+    font-size: 36px;
+    margin: 0;
+}
+
+/* Estilo do subtítulo */
+.cabecalho h2 {
+    color: #0a9396; /* Azul turquesa */
+    font-size: 20px;
+    margin: 8px 0;
+    font-weight: normal;
+}
+
+/* Estilo do cumprimento */
+.cabecalho h3 {
+    color: #333;
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+/* Estilo do parágrafo de localização */
+.cabecalho p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Espaçamento entre elementos */
+.cabecalho h1, .cabeçalho h2, .cabeçalho h3, .cabeçalho p {
+    margin: 0px 0;
+}
+
+
+

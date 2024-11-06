@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Bem-vindo</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Poral Amatiss</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    </head>
+<body class="corpo_padrao">
     <h1>Bem-vindo, {{ nome }}!</h1>
-    <h2>Local de utilização: {{ tipo }}</h2>
+    <h2>Local de utilização: {{tipo}}</h2>
 
-
-    <div>
-
-        
-    </div>
+    
+        <a href=" " class= 'botao'>Incluir Autorização</a>
+        <a href="" class="botao">Verificar elegibilidade</a>
+        <a href="" class="botao">
 </body>
 </html>
