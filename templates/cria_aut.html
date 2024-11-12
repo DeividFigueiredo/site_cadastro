@@ -4,11 +4,28 @@
     <meta charset="UTF-8">
     <title>Incluir Autorização</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">  
+
+    <script>
+        function atualizarCampos() {
+            const tipoUsuario = document.getElementById("tipo_usuario").value;
+            const statusField = document.getElementById("statusField");
+            const statusInput = document.getElementById("status");
+
+            // Exibe o campo "Status" apenas para "Operadora"
+            if (tipoUsuario === "Autorizador") {
+                statusField.style.display = "block";
+        
+            } else {
+                statusField.style.display = "none";
+                statusInput.value = "EM_ANALISE";  // Define o valor automaticamente como "Em análise"
+            }
+        }  
+    </script>
 </head>
 <body class="corpo_padrao">
 
     <div class="cabecalho">
-        <h1><a href="{{ url_for('autoriza') }}">Amatiss</a></h1>
+        <h1><a href="{{ url_for('home') }}">Amatiss</a></h1>
     </div>
 
 <h1>Incluir Nova Autorização</h1>
@@ -23,11 +40,18 @@
         <label for="data_autorizacao">Data da Autorização:</label>
         <input type="date" id="data_autorizacao" name="data_autorizacao" required>
 
-        <label for="status">Status:</label>
-        <select name="status" id="status">
-            <option value="AUTORIZADO">Autorizado</option>
-            <option value="NEGADO">Negado</option>
-        </select>
+        {% if tipo_usuario == "Autorizador" %}
+            <div id="statusField">
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="AUTORIZADO">Autorizado</option>
+                    <option value="NEGADO">Negado</option>
+                </select>
+            </div>
+        {% else %}
+            <!-- Campo oculto com valor "Em análise" para outros tipos de usuário -->
+            <input type="hidden" id="status" name="status" value="EM_ANALISE">
+        {% endif %}
 
         <label for="nome_procedimento">Nome do Procedimento:</label>
         <input type="text" id="nome_procedimento" name="nome_procedimento" required>

@@ -258,4 +258,6 @@ input[type="password"] {
 color: red;
 }
 
-
+.campo-oculto{
+    display: none;
+}

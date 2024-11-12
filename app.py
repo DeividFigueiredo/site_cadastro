@@ -192,6 +192,7 @@ def cria_aut():
 
     usuario_id= session.get('usuario_id')
     nome_usuario= session.get('nome_usuario')
+    tipo_usuario= session.get('tipo_usuario')
     
     if usuario_id == None:
         return redirect(url_for('login'))
@@ -234,7 +235,7 @@ def cria_aut():
         
 
 
-    return render_template('cria_aut.html', nome= nome_usuario)
+    return render_template('cria_aut.html', nome= nome_usuario, tipo_usuario=tipo_usuario)
 
 @app.route('/valida_aut')
 def valida_aut():
@@ -252,6 +253,16 @@ def verifica_eleg():
         beneficiario= Beneficiario.query.filter_by(matricula=matricula).first()
 
     return render_template('verifica_eleg.html',beneficiario=beneficiario)
+
+@app.route('/home')
+def home():
+    tipo_usuario= session.get('tipo_usuario')
+
+    if tipo_usuario == 'Autorizador':
+        return redirect(url_for('autoriza_loc'))
+    else:
+        return redirect(url_for('autoriza'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5001 ,debug=True)
