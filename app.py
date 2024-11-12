@@ -39,7 +39,7 @@ class Autorizacao(db.Model):
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)  # Qual usuário fez a autorização (chave estrangeira)
     matricula = db.Column(db.String(100), db.ForeignKey('beneficiario.matricula'), nullable=False)  # Qual beneficiário recebeu a autorização (chave estrangeira)
     data_autorizacao = db.Column(db.DateTime, nullable=False)  # Data da autorização
-    status = db.Column(db.String(50), nullable=False)  # Status da autorização (por exemplo, aprovada ou negada)
+    status = db.Column(db.String(50), nullable=True)  # Status da autorização (por exemplo, aprovada ou negada)
     senha= db.Column(db.String(20), nullable=True)
     cod_procedimento= db.Column(db.String(20), nullable=False)
     nome_procedimento= db.Column(db.String(50), nullable=False)
@@ -229,7 +229,8 @@ def cria_aut():
             nome_atendente=nome_atendente
         )
         db.session.add(nova_autorizacao)
-        db.session.commit()
+        db.session.commit() 
+        
         
 
 
@@ -241,6 +242,17 @@ def valida_aut():
 
     return render_template('valida_aut.html', autorizacoes=autorizacoes)
 
+@app.route('/verifica_eleg', methods=['GET', 'POST'])
+def verifica_eleg():
+    beneficiario= None
+
+    if request.method == 'POST':
+        matricula= request.form.get('matricula')
+        print(f'matricula {matricula}')
+        beneficiario= Beneficiario.query.filter_by(matricula=matricula).first()
+
+    return render_template('verifica_eleg.html',beneficiario=beneficiario)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5001 ,debug=True)
     

@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">  
 </head>
 <body class="corpo_padrao">
+
+    <div class="cabecalho">
+        <h1><a href="{{ url_for('autoriza') }}">Amatiss</a></h1>
+    </div>
+
 <h1>Incluir Nova Autorização</h1>
     <form action="{{ url_for('cria_aut') }}" method="POST">
         

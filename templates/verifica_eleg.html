@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Elegibilidade</title>
+</head>
+<body class="corpo_padrao">
+
+    <div class="cabecalho">
+        <h1><a href="{{ url_for('autoriza') }}">Amatiss</a></h1>
+    </div>
+    <h1>Verificar Elegibilidade</h1>
+    <form action="{{ url_for('verifica_eleg') }}" method="post">
+        <label for="matricula">numero de matricula</label>
+        <input type="text" id="matricula" name="matricula" required>
+        <button type="submit">Verificar</button>
+    </form>
+
+    {% if beneficiario %}
+    <p>nome: {{ beneficiario.nome }}<br>
+        matricula: {{ beneficiario.matricula }}<br>
+        status: {{ beneficiario.status }}
+    </p>
+{% else %}
+    <p>Nenhum beneficiário encontrado.</p>
+{% endif %}
+
+</body>
+</html>
+
+</body>
+</html>

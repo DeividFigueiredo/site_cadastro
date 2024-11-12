@@ -6,30 +6,38 @@
     <title>Validar Autorizações</title>
 </head>
 <body class="corpo_padrao">
+
+    <div class="cabecalho">
+        <h1><a href="{{ url_for('autoriza') }}">Amatiss</a></h1>
+    </div>
+
     <h1>Validar Autorizações</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Matrícula</th>
-                <th>Data da Autorização</th>
-                <th>Status</th>
-                <th>Ações</th>  <!-- Nova coluna para ações -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for autorizacao in autorizacoes %}
+
+    <div>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ autorizacao.id }}</td>
-                    <td>{{ autorizacao.matricula }}</td>
-                    <td>{{ autorizacao.data_autorizacao.strftime('%Y-%m-%d') }}</td>
-                    <td>{{ autorizacao.status }}</td>
-                    <td>
-                        <a href=" ">Ver Detalhes</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Matrícula</th>
+                    <th>Data da Autorização</th>
+                    <th>Status</th>
+                    <th>Ações</th>  <!-- Nova coluna para ações -->
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for autorizacao in autorizacoes %}
+                    <tr>
+                        <td>{{ autorizacao.id }}</td>
+                        <td>{{ autorizacao.matricula }}</td>
+                        <td>{{ autorizacao.data_autorizacao.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ autorizacao.status }}</td>
+                        <td>
+                            <a href=" ">Ver Detalhes</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
