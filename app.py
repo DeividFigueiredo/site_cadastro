@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
+import io
+
 app = Flask(__name__)
 
 app.secret_key= 'chave_super_secreta'
@@ -24,11 +27,22 @@ class Usuario(db.Model):
 
 
 class Beneficiario(db.Model):
-    id= db.Column(db.Integer, primary_key= True)
-    nome= db.Column(db.String(100), nullable= False)
-    matricula= db.Column(db.String(100), nullable= False, unique= True)
-    data_entrada= db.Column(db.DateTime, nullable= False)
-    status= db.Column(db.String(30), nullable= False)
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    matricula = db.Column(db.String(100), nullable=False, unique=True)
+    unidade = db.Column(db.String, nullable=False)
+    status = db.Column(db.String(30), nullable=False)
+
+    # Novos campos para a carteirinha
+    empresa = db.Column(db.String(100), nullable=False)
+    plano = db.Column(db.String(150), nullable=False)
+    codigo_produto = db.Column(db.String(50), nullable=False)
+    regra_carencia = db.Column(db.String(50), nullable=False)
+    nascimento = db.Column(db.Date, nullable=False)
+    inclusao = db.Column(db.Date, nullable=False)
+    validade = db.Column(db.Date, nullable=False)
+    fim_cpt = db.Column(db.Date, nullable=False)
+    telefone = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         return f'<Beneficiario{self.nome}>'
@@ -124,6 +138,59 @@ def cadastrar_benef():
 
     return render_template('cadastro_beneficiarios.html')
 
+@app.route('/gerar_carteirinha', methods=['GET'])
+def gerar_carteirinha():
+
+    beneficiarios = Beneficiario.query()
+    
+    # Dados do beneficiário (vindos do banco ou requisição)
+    nome = request.args.get('nome', 'CRISTIANE TEODORO SEGAL')
+    empresa = request.args.get('empresa', 'PLANO PARTICULAR')
+    matricula = request.args.get('matricula', '020.021134-00')
+    unidade = request.args.get('unidade', 'MHVida - Registro ANS - 412015')
+    plano = request.args.get('plano', 'AMACOR CLÁSSICO - 489.363/21-8')
+    codigo_produto = request.args.get('codigo_produto', '489363218')
+    regra_carencia = request.args.get('regra_carencia', 'COM CARÊNCIA PF')
+    nascimento = request.args.get('nascimento', '27/06/1981')
+    inclusao = request.args.get('inclusao', '20/09/2023')
+    validade = request.args.get('validade', '20/09/2026')
+    fim_cpt = request.args.get('fim_cpt', '19/09/2025')
+    telefone = request.args.get('telefone', '(21) 3405-9466 (WhatsApp)')
+
+    # Tamanho da carteirinha
+    largura, altura = 800, 400
+    imagem = Image.new("RGB", (largura, altura), "white")
+    draw = ImageDraw.Draw(imagem)
+
+    # Fontes (verifique o caminho para as fontes no seu sistema)
+    try:
+        fonte_titulo = ImageFont.truetype("arialbd.ttf", 18)  # Fonte em negrito
+        fonte_texto = ImageFont.truetype("arial.ttf", 14)
+    except:
+        # Fonte padrão se a fonte específica não estiver disponível
+        fonte_titulo = fonte_texto = ImageFont.load_default()
+
+    # Desenhar as informações
+    draw.text((20, 20), nome, font=fonte_titulo, fill="black")  # Nome
+    draw.text((20, 50), f"Empresa: {empresa}", font=fonte_texto, fill="black")
+    draw.text((20, 75), f"Matrícula: {matricula}", font=fonte_texto, fill="black")
+    draw.text((20, 100), f"Unidade: {unidade}", font=fonte_texto, fill="black")
+    draw.text((20, 125), f"Plano: {plano}", font=fonte_texto, fill="black")
+    draw.text((20, 150), f"Código Produto ANS: {codigo_produto}", font=fonte_texto, fill="black")
+    draw.text((20, 175), f"Regra de Carência: {regra_carencia}", font=fonte_texto, fill="black")
+    draw.text((20, 200), f"Data de Nascimento: {nascimento}   Inclusão: {inclusao}", font=fonte_texto, fill="black")
+    draw.text((20, 225), f"Data de Validade: {validade}   Data Fim CPT: {fim_cpt}", font=fonte_texto, fill="black")
+    draw.text((20, 275), f"Titular: {nome}", font=fonte_texto, fill="black")
+    draw.text((20, 325), f"ADMINISTRATIVO MH VIDA: {telefone}", font=fonte_texto, fill="black")
+    draw.text((20, 350), "VÁLIDO SOMENTE COM DOCUMENTO DE IDENTIFICAÇÃO", font=fonte_texto, fill="black")
+
+    # Salvando a imagem em memória para envio como resposta
+    img_io = io.BytesIO()
+    imagem.save(img_io, 'JPEG', quality=85)
+    img_io.seek(0)
+
+    return send_file(img_io, mimetype='image/jpeg', as_attachment=False, download_name="carteirinha.jpg")
+
 
 # login.
 @app.route('/login', methods=['GET', 'POST'])
@@ -151,6 +218,9 @@ def login():
                 
                 elif usuario.tipo_usuario == 'Amacor':
                     return redirect(url_for('autoriza'))
+                
+                elif usuario.tipo_usuario == 'Corretor':
+                    return redirect(url_for('vendas_home'))
                 else:
                     return 'Tipo de Usuario não reconhecido'
                 
@@ -168,6 +238,10 @@ def login():
 def autoriza(): 
     nome_usuario= session.get('nome_usuario')
     tipo_usuario= session.get('tipo_usuario')
+
+    if tipo_usuario not in ['Credenciado' or  'Referenciado']:
+        Flask ('Acesso negado.')
+        return redirect(url_for('login'))
 
     if nome_usuario:
         return render_template('autoriza.html', nome= nome_usuario, tipo= tipo_usuario)
@@ -264,6 +338,19 @@ def home():
         return redirect(url_for('autoriza'))
 
 
+
+##separação de sistemas
+
+@app.route('/vendas_home')
+def vendas_home():
+    tipo_usuario= session.get('tipo_usuario')
+    nome= session.get('nome_usuario')
+
+
+    return render_template('vendas_home.html', nome=nome, tipo_usuario=tipo_usuario)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5001 ,debug=True)
     
+

@@ -213,13 +213,13 @@ input[type="password"] {
     color: #005f73; /* Azul escuro */
     font-size: 36px;
     margin: 0;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
 
 }
 
 .cabecalho h1:hover{
     color: #fdb461;
-    
+    transform: scale (2.05);
 }
 
 /* Estilo do subtítulo */
